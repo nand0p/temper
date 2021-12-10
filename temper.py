@@ -29,6 +29,7 @@ import re
 import select
 import struct
 import sys
+import datetime
 
 # Non-standard modules
 try:
@@ -372,11 +373,14 @@ class Temper(object):
       return
 
     for info in results:
-      s = 'Bus %03d Dev %03d %04x:%04x %s' % (info['busnum'],
-                                              info['devnum'],
-                                              info['vendorid'],
-                                              info['productid'],
-                                              info.get('firmware'))
+      s = '%s - Bus %03d Dev %03d %04x:%04x %s' % (
+        str(datetime.datetime.now()),
+        info['busnum'],
+        info['devnum'],
+        info['vendorid'],
+        info['productid'],
+        info.get('firmware'))
+
       if 'error' in info:
         s += ' Error: %s' % info['error']
       else:
