@@ -1,30 +1,36 @@
 #!/bin/bash
 
 
+NAME=temper
+PERIOD=300
+THRESHOLD=20
+EVALUATION_PERIODS=3
+LOCATION=sl
+
 
 # internal
 aws cloudwatch put-metric-alarm \
-  --alarm-name "temper-internal" \
-  --alarm-description "temper internal temperature low" \
-  --namespace "temper" \
+  --alarm-name "${NAME}-internal" \
+  --alarm-description "${NAME} internal temperature low" \
+  --namespace "${NAME}" \
   --metric-name internal \
   --statistic Minimum \
-  --period 300 \
-  --evaluation-periods 3 \
-  --threshold 20 \
+  --period ${PERIOD} \
+  --evaluation-periods ${EVALUATION_PERIODS} \
+  --threshold ${THRESHOLD} \
   --comparison-operator LessThanOrEqualToThreshold \
-  --dimensions Name=location,Value=sl
+  --dimensions Name=location,Value=${LOCATION}
 
 
 # external
 aws cloudwatch put-metric-alarm \
-  --alarm-name "temper-external" \
-  --alarm-description "temper external temperature low" \
-  --namespace "temper" \
+  --alarm-name "${NAME}-external" \
+  --alarm-description "${NAME} external temperature low" \
+  --namespace "${NAME}" \
   --metric-name external \
   --statistic Minimum \
-  --period 300 \
-  --evaluation-periods 3 \
-  --threshold 20 \
+  --period ${PERIOD} \
+  --evaluation-periods ${EVALUATION_PERIODS} \
+  --threshold ${THRESHOLD} \
   --comparison-operator LessThanOrEqualToThreshold \
-  --dimensions Name=location,Value=sl
+  --dimensions Name=location,Value=${LOCATION}
